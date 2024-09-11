@@ -1,11 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
-import Navbar from './components/shared/navbar';
+import Home from './components/home';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-    <Navbar/>
+    <BrowserRouter>
+    <Routes>
+
+    <Route path="/home" element={<Home/>} />
+    <Route path='*' element = {<Navigate to="/home"/>}/>
+
+    </Routes>
+    </BrowserRouter>
     
     </div>
   );
