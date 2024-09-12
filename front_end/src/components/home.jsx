@@ -1,10 +1,10 @@
 import React from 'react';
-import My_Navbar from './shared/navbar';
+import MyNavbar from './shared/navbar';
 
 const Home = () => {
     return (
         <div className='flex w-full h-full'>
-            <My_Navbar/>
+            <MyNavbar/>
             
         </div>
     );

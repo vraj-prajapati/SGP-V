@@ -114,7 +114,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const My_Navbar = () => {
+const MyNavbar = () => {
     return (
         <nav className="bg-white shadow w-full">
             <div className="flex flex-row items-center justify-between py-4">
@@ -208,4 +208,4 @@ const My_Navbar = () => {
     );
 }
 
-export default My_Navbar;
+export default MyNavbar;
