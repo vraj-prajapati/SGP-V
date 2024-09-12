@@ -133,12 +133,6 @@ const My_Navbar = () => {
                         Home
                     </Link>
                     
-                    <Link to="/about" className="border border-blue-600 hover:bg-blue-600 w-20 py-2 rounded-full hover:text-white text-blue-600 transition duration-300">
-                        About
-                    </Link>
-                    <Link to="/clients" className="border border-blue-600 hover:bg-blue-600 w-20 py-2 rounded-full hover:text-white text-blue-600 transition duration-300">
-                        Clients
-                    </Link>
 
                     {/* Dropdown */}
                     <div className="relative group">
@@ -163,9 +157,34 @@ const My_Navbar = () => {
                         </div>
                     </div>
 
-                    <Link to="/contact" className="text-blue-600 transition duration-300 border border-blue-600 hover:bg-blue-600 w-24 py-2 rounded-full hover:text-white">
-                        Contact Us
-                    </Link>
+                    {/* Dropdown */}
+                        <div className="relative group">
+                        <button className="border border-blue-600 hover:bg-blue-600 py-2 rounded-full hover:text-white text-blue-600 transition duration-300 w-20 flex flex-row justify-center items-center ">
+                            About
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+
+                        </button>
+                        <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                            <Link
+                                to="/clients"
+                                className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-800"
+                            >
+                                Clients
+                            </Link>
+                            <Link
+                                to="/about-us"
+                                className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-800"
+                            >
+                                About Us
+                            </Link>
+                            <Link
+                                to="/contact-us"
+                                className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-800"
+                            >
+                                Contact Us
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Login and Signup Buttons */}
