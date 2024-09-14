@@ -125,14 +125,70 @@ const JobApplicationForm = () => {
                 </div>
 
                 {/* Submit Button */}
-                <div className="md:col-span-2">
+                {/* <div className="md:col-span-2">
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300"
                         >
                         Submit Application
                     </button>
-                </div>
+                </div> */}
+
+                {/* Mobile */}
+                <div className="flex flex-col">
+                        <label htmlFor="mobile" className="mb-2 text-sm font-semibold">Mobile *</label>
+                        <input
+                            type="text"
+                            id="mobile"
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="eg. [0] - [9999999999]"
+                        />
+                    </div>
+
+                     {/* E-Mail */}
+                     <div className="flex flex-col">
+                        <label htmlFor="email" className="mb-2 text-sm font-semibold">E-Mail *</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter Email"
+                        />
+                    </div>
+
+                      {/* Apply For */}
+                      <div className="flex flex-col">
+                        <label htmlFor="applyFor" className="mb-2 text-sm font-semibold">Apply For *</label>
+                        <input
+                            type="text"
+                            id="applyFor"
+                            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="wordpress developer"
+                            readOnly
+                        />
+                    </div>
+
+                     {/* CV Upload */}
+                    <div className="md:col-span-2 flex  flex-col items-center justify-center">
+                        <label htmlFor="cvUpload" className="mb-2 text-sm font-semibold">CV Upload *</label>
+                        <input
+                            type="file"
+                            id="cvUpload"
+                            className="border border-gray-300 rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            accept=".pdf"
+                        />
+                        <small className="text-gray-500 mt-1">Only pdf files are allowed. (Maximum 5 MB)</small>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="md:col-span-2 flex justify-center">
+                        <button
+                            type="submit"
+                            className="w-48 bg-teal-500 text-white py-2 rounded-md hover:bg-teal-600 transition duration-300"
+                        >
+                            Apply Now
+                        </button>
+                    </div>
             </form>
         </div>
 </div>
