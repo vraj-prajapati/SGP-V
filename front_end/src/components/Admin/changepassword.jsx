@@ -27,7 +27,7 @@ const ChangePassword = () => {
 
     try {
       // Make a request to the backend to change the password
-      const response = await fetch('http://localhost:3000/admin/changepassword', {  // Change URL if needed
+      const response = await fetch('http://localhost:5000/admin/changepassword', {  // Change URL if needed
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const ChangePassword = () => {
       if (response.ok) {
         setSuccess('Password changed successfully! Redirecting to login...');
         setTimeout(() => {
-          navigate('/admin_login'); // Redirect to admin login page after success
+          navigate('/admin'); // Redirect to admin login page after success
         }, 2000);
       } else {
         setError(data.message || 'Error changing password');
