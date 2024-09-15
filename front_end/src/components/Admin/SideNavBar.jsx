@@ -48,7 +48,7 @@ const Sidebar = () => {
       </div>
       <div className="px-6 py-4 border-t border-gray-700">
         <Link
-          to="/admin/change-password"
+          to="/admin/changepassword"
           className="text-gray-300 hover:bg-gray-700 hover:text-white px-4 py-2 rounded transition block border border-gray-700"
         >
           Change Password

@@ -9,6 +9,7 @@ import ProtectedRoute from './components/Admin/ProtectedRoutes';
 import JobTable from './components/browse_job';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import ChangePassword from './components/Admin/changepassword';
 
 const App = () => {
   return (
@@ -40,6 +41,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <JobPosting />
+                </ProtectedRoute>
+              } 
+            />
+             <Route 
+              path="admin/changepassword" 
+              element={
+                <ProtectedRoute>
+                  <ChangePassword />
                 </ProtectedRoute>
               } 
             />
