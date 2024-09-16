@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const JobPost = require('./models/jobposted');
+const jobPostRoutes = require('./routes/jobpostedroutes');
 require('dotenv').config();
-const router = express.Router();
+// const router = express.Router();
 
 const app = express();
 app.use(cors());
@@ -116,16 +117,7 @@ app.post('/jobPost', async (req, res) => {
   }
 });
 
-// Define the /jobPost route to fetch all jobs
-router.get('/api/jobpost', async (req, res) => {
-  try {
-    const jobs = await JobPost.find();
-    res.json(jobs);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching jobs" });
-  }
-});
-module.exports = router;
+app.use('/api', jobPostRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

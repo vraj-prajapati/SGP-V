@@ -1,16 +1,17 @@
-// const express = require('express');
-// const router = express.Router();
-// const Job = require('../models/jobposted'); // Adjust path as necessary
+// backend/routes/jobPostRoutes.js
+const express = require('express');
+const router = express.Router();
+const JobPost = require('../models/jobposted')
 
-// // Handle POST request to create a new job posting
-// router.post('/jobPost', async (req, res) => {
-//     try {
-//         const newJob = new Job(req.body);
-//         await newJob.save();
-//         res.status(201).json({ message: 'Job posting created successfully!' });
-//     } catch (error) {
-//         console.error('Error creating job posting:', error);
-//         res.status(500).json({ error: 'Failed to create job posting.' });
-//     }
-// });
-// module.exports = router;
+// Route to get all job posts
+router.get('/jobPost', async (req, res) => {
+  try {
+    const jobPosts = await JobPost.find(); // Fetch all job posts from MongoDB
+    res.json(jobPosts); // Send response back to the client
+  } catch (error) {
+    console.error("Error fetching job posts:", error);
+    res.status(500).json({ message: "Error fetching job posts" });
+  }
+});
+
+module.exports = router;

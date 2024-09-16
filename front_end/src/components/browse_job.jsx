@@ -11,9 +11,9 @@ const JobTable = () => {
     // Function to fetch jobs from backend
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/jobpost"); 
-// Update with your actual API URL
+        const response = await fetch("http://localhost:5000/api/jobpost");
         const data = await response.json();
+        console.log(data); // Check the structure here
         setJobs(data);
         setLoading(false);
       } catch (error) {
@@ -25,7 +25,7 @@ const JobTable = () => {
     // Initial fetch of jobs
     fetchJobs();
 
-    // Option 1: Polling - Fetch jobs every 5 seconds
+    // Polling - Fetch jobs every 5 seconds
     const intervalId = setInterval(() => {
       fetchJobs();
     }, 5000);
@@ -35,17 +35,22 @@ const JobTable = () => {
   }, []);
 
   const filteredJobs = jobs.filter((job) => {
+    const qualifications = job.qualifications ? job.qualifications.join(", ") : '';
+    
     return (
-      job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.keySkills.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.qualifications.join(", ").toLowerCase().includes(searchTerm.toLowerCase()) || // Fixed qualifications array
-      job.stream.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.jobLocation.state.toLowerCase().includes(searchTerm.toLowerCase()) || // Fixed jobLocation access
-      job.jobLocation.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.industryType.join(", ").toLowerCase().includes(searchTerm.toLowerCase()) || // Fixed industryType array
-      job.experience.min.toString().includes(searchTerm) ||
-      job.experience.max.toString().includes(searchTerm) ||
-      job.jobDescription.toLowerCase().includes(searchTerm.toLowerCase())
+      (job.jobTitle && job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (job.keySkills && job.keySkills.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      qualifications.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (job.stream && job.stream.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (job.jobLocation &&
+        job.jobLocation.state.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (job.jobLocation &&
+        job.jobLocation.city.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (job.industryType && job.industryType.join(", ").toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (job.experience &&
+        (job.experience.min.toString().includes(searchTerm) ||
+         job.experience.max.toString().includes(searchTerm))) ||
+      (job.jobDescription && job.jobDescription.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
@@ -78,7 +83,7 @@ const JobTable = () => {
               <thead>
                 <tr>
                   <th className="px-4 py-2 border">Job Title</th>
-                  <th className="px-4 py-2 border">KeySkills</th>
+                  <th className="px-4 py-2 border">Key Skills</th>
                   <th className="px-4 py-2 border">Qualifications</th>
                   <th className="px-4 py-2 border">Stream</th>
                   <th className="px-4 py-2 border">Job Location</th>
@@ -89,51 +94,50 @@ const JobTable = () => {
                 </tr>
               </thead>
               <tbody>
-  {filteredJobs.length > 0 ? (
-    filteredJobs.map((job) => (
-      <tr key={job.jid}>
-        <td className="px-4 py-2 border">{job.jobTitle}</td>
-        <td className="px-4 py-2 border">{job.keySkills}</td>
-        <td className="px-4 py-2 border">{job.qualifications.join(", ")}</td>
-        <td className="px-4 py-2 border">{job.stream}</td>
-        <td className="px-4 py-2 border">
-          {job.jobLocation.state}, {job.jobLocation.city}
-        </td>
-        <td className="px-4 py-2 border">{job.industryType.join(", ")}</td>
-        <td className="px-4 py-2 border">
-          {job.experience.min} - {job.experience.max} years
-        </td>
-        <td className="px-4 py-2 border">
-          {job.jobDescription.length > 100 ? (
-            <div>
-              {job.jobDescription.substring(0, 100)}...
-              <button
-                onClick={() => handleReadMore(job)}
-                className="text-blue-500 underline ml-2"
-              >
-                Read more
-              </button>
-            </div>
-          ) : (
-            job.jobDescription
-          )}
-        </td>
-        <td className="px-4 py-2 border">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Apply
-          </button>
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td className="px-4 py-2 border" colSpan="9">
-        No jobs found.
-      </td>
-    </tr>
-  )}
-</tbody>
-
+                {filteredJobs.length > 0 ? (
+                  filteredJobs.map((job) => (
+                    <tr key={job.jid}>
+                      <td className="px-4 py-2 border">{job.jobTitle || 'N/A'}</td>
+                      <td className="px-4 py-2 border">{job.keySkills || 'N/A'}</td>
+                      <td className="px-4 py-2 border">{job.qualifications?.join(", ") || 'N/A'}</td>
+                      <td className="px-4 py-2 border">{job.stream || 'N/A'}</td>
+                      <td className="px-4 py-2 border">
+                        {(job.jobLocation?.state || 'N/A')}, {(job.jobLocation?.city || 'N/A')}
+                      </td>
+                      <td className="px-4 py-2 border">{job.industryType?.join(", ") || 'N/A'}</td>
+                      <td className="px-4 py-2 border">
+                        {job.experience ? `${job.experience.min} - ${job.experience.max} years` : 'N/A'}
+                      </td>
+                      <td className="px-4 py-2 border">
+                        {job.jobDescription?.length > 100 ? (
+                          <div>
+                            {job.jobDescription.substring(0, 100)}...
+                            <button
+                              onClick={() => handleReadMore(job)}
+                              className="text-blue-500 underline ml-2"
+                            >
+                              Read more
+                            </button>
+                          </div>
+                        ) : (
+                          job.jobDescription || 'N/A'
+                        )}
+                      </td>
+                      <td className="px-4 py-2 border">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                          Apply
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="px-4 py-2 border" colSpan="9">
+                      No jobs found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           </div>
         )}
