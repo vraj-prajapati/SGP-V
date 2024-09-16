@@ -1,12 +1,12 @@
-// backend/server.js
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const JobPost = require('./models/jobposted');
 require('dotenv').config();
+const router = express.Router();
 
 const app = express();
 app.use(cors());
@@ -43,21 +43,21 @@ const authenticateAdmin = async (req, res, next) => {
 // Admin Login Route
 app.post('/admin/login', async (req, res) => {
   const { adminId, password } = req.body;
-  
+
   try {
     let admin = await Admin.findOne({ adminId });
-    
+
     // If admin not found, create a default admin
     if (!admin) {
       const defaultAdminId = 'admin';
       const defaultPassword = 'admin';
       const hashedPassword = await bcrypt.hash(defaultPassword, 10);
-      
+
       admin = new Admin({
         adminId: defaultAdminId,
         password: hashedPassword,
       });
-      
+
       await admin.save();
       console.log('Default admin created:', adminId);
     }
@@ -104,6 +104,28 @@ app.post('/admin/signout', authenticateAdmin, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.post('/jobPost', async (req, res) => {
+  try {
+    const newJob = new JobPost(req.body); // Create new job from request body
+    await newJob.save(); // Save to MongoDB
+    res.status(201).json({ message: 'Job posting created successfully!' });
+  } catch (error) {
+    console.error('Error creating job posting:', error);
+    res.status(500).json({ error: 'Failed to create job posting.' });
+  }
+});
+
+// Define the /jobPost route to fetch all jobs
+router.get('/api/jobpost', async (req, res) => {
+  try {
+    const jobs = await JobPost.find();
+    res.json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching jobs" });
+  }
+});
+module.exports = router;
 
 // Start Server
 const PORT = process.env.PORT || 5000;
